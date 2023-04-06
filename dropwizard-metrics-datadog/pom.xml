@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>metrics-datadog-parent</artifactId>
-        <groupId>org.coursera</groupId>
-        <version>2.0.0-RC1</version>
+        <groupId>pro.streem</groupId>
+        <version>2.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.coursera</groupId>
+            <groupId>pro.streem</groupId>
             <artifactId>metrics-datadog</artifactId>
             <version>${project.version}</version>
         </dependency>

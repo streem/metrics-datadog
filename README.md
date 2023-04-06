@@ -27,11 +27,11 @@ to memory constraints.
 ## Usage
 
 ~~~scala
-import org.coursera.metrics.datadog.DatadogReporter
-import org.coursera.metrics.datadog.DatadogReporter.Expansion._
-import org.coursera.metrics.datadog.transport.Transport
-import org.coursera.metrics.datadog.transport.HttpTransport
-import org.coursera.metrics.datadog.transport.UdpTransport
+import pro.streem.metrics.datadog.DatadogReporter
+import pro.streem.metrics.datadog.DatadogReporter.Expansion._
+import pro.streem.metrics.datadog.transport.Transport
+import pro.streem.metrics.datadog.transport.HttpTransport
+import pro.streem.metrics.datadog.transport.UdpTransport
 import scala.concurrent.duration.SECONDS
 
 ...
@@ -104,7 +104,7 @@ First, add the `dropwizard-metrics-datadog` dependency in your POM:
 
 ~~~xml    
     <dependency>
-        <groupId>org.coursera</groupId>
+        <groupId>pro.streem</groupId>
         <artifactId>dropwizard-metrics-datadog</artifactId>
         <version>1.1.13</version>
     </dependency>
@@ -260,12 +260,12 @@ public class CustomMetricNameFormatterFactory implements MetricNameFormatterFact
 }
 ~~~
 
-##### 3. Add the Factory to `org.coursera.metrics.datadog.MetricNameFormatterFactory` file
+##### 3. Add the Factory to `pro.streem.metrics.datadog.MetricNameFormatterFactory` file
 
 We need to make sure our `CustomMetricNameFormatterFactory` is added to the list of subTypes
 for `MetricNameFormatterFactory`, otherwise the `"custom"` in our config won't be recognized.
 
-Add a file called `org.coursera.metrics.datadog.MetricNameFormatterFactory` to
+Add a file called `pro.streem.metrics.datadog.MetricNameFormatterFactory` to
 `src/main/resources/META-INF/services` and add the full path to your class to the file
 (e.g. `com.company.CustomMetricNameFormatterFactory`)
 
@@ -277,23 +277,23 @@ Similar to the `MetricNameFormatter` steps, we need to:
 
 1. Create a DynamicTagsCallback
 2. Create a DynamicTagsCallbackFactory with `@JsonTypeName` annotation
-3. Add the Factory to `org.coursera.metrics.datadog.DynamicTagsCallbackFactory` file
+3. Add the Factory to `pro.streem.metrics.datadog.DynamicTagsCallbackFactory` file
 
 See above instructions for details.
 
 ## Maven Info
 
 Metrics datadog reporter is available as an artifact on
-[Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.coursera%22%20AND%20a%3A%22metrics-datadog%22)
+[Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pro.streem%22%20AND%20a%3A%22metrics-datadog%22)
 
-* Group: org.coursera
+* Group: pro.streem
 * Artifact: metrics-datadog
 * Version: 1.1.13
 
 Dropwizard datadog reporter is available as an artifact on
-[Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.coursera%22%20AND%20a%3A%22dropwizard-metrics-datadog%22)
+[Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pro.streem%22%20AND%20a%3A%22dropwizard-metrics-datadog%22)
 
-* Group: org.coursera
+* Group: pro.streem
 * Artifact: dropwizard-metrics-datadog
 * Version: 1.1.13
 
