@@ -4,6 +4,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import io.dropwizard.metrics.common.BaseReporterFactory;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.DefaultMetricNameFormatterFactory;
 import org.coursera.metrics.datadog.DynamicTagsCallbackFactory;
