@@ -191,7 +191,7 @@ part of the metric name (not just the beginning).
 If you want to limit the set of expansions applied to each metric, you can specify
 a custom set.
 
-The full set of expansions can be found in the [Expansion enum](https://github.com/coursera/metrics-datadog/blob/master/metrics-datadog/src/main/java/org/coursera/metrics/datadog/DatadogReporter.java#L232).
+The full set of expansions can be found in the [Expansion enum](https://github.com/streem/metrics-datadog/blob/master/metrics-datadog/src/main/java/org/coursera/metrics/datadog/DatadogReporter.java#L241).
 
 ~~~yaml
 metrics:

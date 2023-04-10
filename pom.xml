@@ -12,7 +12,7 @@
     <version>2.0.1</version>
     <packaging>pom</packaging>
     <name>Datadog Metrics Parent</name>
-    <url>https://github.com/coursera/metrics-datadog</url>
+    <url>https://github.com/streem/metrics-datadog</url>
 
     <modules>
         <module>metrics-datadog</module>
@@ -27,15 +27,20 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git@github.com:coursera/metrics-datadog.git</connection>
-        <developerConnection>scm:git:git@github.com:coursera/metrics-datadog.git</developerConnection>
-        <url>scm:git@github.com:coursera/metrics-datadog.git</url>
+        <connection>scm:git:git@github.com:streem/metrics-datadog.git</connection>
+        <developerConnection>scm:git:git@github.com:streem/metrics-datadog.git</developerConnection>
+        <url>scm:git@github.com:streem/metrics-datadog.git</url>
     </scm>
     <developers>
         <developer>
             <id>dguo-coursera</id>
             <name>David Guo</name>
             <email>dguo (at) coursera.org</email>
+        </developer>
+        <developer>
+            <id>streem</id>
+            <name>streem</name>
+            <url>https://github.com/streem</url>
         </developer>
     </developers>
     <contributors>
