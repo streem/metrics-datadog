@@ -15,4 +15,4 @@ junit = { group = "junit", name = "junit", version = "4.12" }
 fest-assert-core = { group = "org.easytesting", name = "fest-assert-core", version = "2.0M10" }
 mockito-all = { group = "org.mockito", name = "mockito-all", version = "1.10.19" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version = "1.7.25" }
-dnsCacheManipulator = { group = "com.alibaba", name = "dns-cache-manipulator", version = "1.5.1" }
+dnsCacheManipulator = { group = "com.alibaba", name = "dns-cache-manipulator", version = "1.8.1" }
