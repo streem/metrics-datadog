@@ -11,8 +11,8 @@ import pro.streem.metrics.datadog.DynamicTagsCallbackFactory;
 import pro.streem.metrics.datadog.MetricNameFormatterFactory;
 import pro.streem.metrics.datadog.transport.AbstractTransportFactory;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.util.EnumSet;
 import java.util.List;
 
