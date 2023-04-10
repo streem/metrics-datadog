@@ -104,7 +104,7 @@ First, add the `dropwizard-metrics-datadog` dependency in your POM:
 
 ~~~xml    
     <dependency>
-        <groupId>pro.streem</groupId>
+        <groupId>pro.streem.metrics-datadog</groupId>
         <artifactId>dropwizard-metrics-datadog</artifactId>
         <version>1.1.13</version>
     </dependency>
