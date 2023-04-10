@@ -1,0 +1,142 @@
+name: Publish Release
+
+env:
+  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+  JAVA_VERSION: 11
+  SONATYPE_BASE_URL: 'https://s01.oss.sonatype.org/service/local/'
+  SONATYPE_STAGING_PROFILE_ID: 'ad18f49c95e39'
+
+on:
+  push:
+    branches:
+      - master
+      - v[0-9]+.[0-9]+.x
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-*
+
+# All jobs, except create-staging-repository, publish, and finalize-staging-repository, need to be kept in sync
+# with their counterparts in pull-request.yaml
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Cache gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Install Java ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Build project and run tests
+        run: ./gradlew build check --stacktrace
+
+      - name: Bundle the build report
+        if: failure()
+        run: find . -type d -name 'reports' | zip -@ -r build-reports.zip
+
+      - name: Upload the build report
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: error-report
+          path: build-reports.zip
+
+  create-staging-repository:
+    needs: [build]
+    # Only tagged versions get staged for release to Maven Central. All other builds only get published to the
+    # snapshot repository.
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    name: Create staging repository
+    runs-on: ubuntu-20.04
+    outputs:
+      repository_id: ${{ steps.create.outputs.repository_id }}
+    steps:
+      - id: create
+        uses: nexus-actions/create-nexus-staging-repo@v1.1
+        with:
+          username: ${{ secrets.SONATYPE_API_USER }}
+          password: ${{ secrets.SONATYPE_API_KEY }}
+          staging_profile_id: ${{ env.SONATYPE_STAGING_PROFILE_ID }}
+          base_url: ${{ env.SONATYPE_BASE_URL }}
+          description: "${{ github.workflow }} #${{ github.run_number }} (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
+  publish:
+    needs: [build, create-staging-repository]
+    # TODO: There's gotta be a better way :(
+    if: ${{ success() || (needs.create-staging-repository.result == 'skipped' && needs.build.result == 'success') }}
+    name: Publish
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Cache gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Install Java ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+
+      # This will publish to the OSSRH Snapshot repository rather than Maven Central if the version
+      # name ends with -SNAPSHOT.
+      - name: Publish to Maven Central
+        env:
+          SIGNING_KEY_ASCII_ARMORED: ${{ secrets.SIGNING_KEY_ASCII_ARMORED }}
+          SONATYPE_API_USER: ${{ secrets.SONATYPE_API_USER }}
+          SONATYPE_API_KEY: ${{ secrets.SONATYPE_API_KEY }}
+          SONATYPE_REPOSITORY_ID: ${{ needs.create-staging-repository.outputs.repository_id }}
+        run: ./gradlew clean publishAllPublicationsToSonatypeRepository
+
+  finalize-staging-repository:
+    needs: [create-staging-repository, publish]
+    if: ${{ always() && needs.create-staging-repository.result == 'success' }}
+    name: Finalize staging repository
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Discard
+        if: ${{ needs.publish.result != 'success' }}
+        uses: nexus-actions/drop-nexus-staging-repo@v1
+        with:
+          username: ${{ secrets.SONATYPE_API_USER }}
+          password: ${{ secrets.SONATYPE_API_KEY }}
+          staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}
+          base_url: ${{ env.SONATYPE_BASE_URL }}
+      - name: Release
+        if: ${{ needs.publish.result == 'success' }}
+        uses: nexus-actions/release-nexus-staging-repo@v1
+        with:
+          username: ${{ secrets.SONATYPE_API_USER }}
+          password: ${{ secrets.SONATYPE_API_KEY }}
+          staging_repository_id: ${{ needs.create-staging-repository.outputs.repository_id }}
+          base_url: ${{ env.SONATYPE_BASE_URL }}
+

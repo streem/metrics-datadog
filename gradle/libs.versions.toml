@@ -1,0 +1,18 @@
+[versions]
+metrics = "4.0.2"
+jackson = "2.9.6"
+dropwizard = "4.0.0"
+
+[libraries]
+dropwizard-metrics-core = { group = "io.dropwizard.metrics", name = "metrics-core", version.ref = "metrics" }
+dropwizard-metrics-dropwizard = { group = "io.dropwizard", name = "dropwizard-metrics", version.ref = "dropwizard" }
+httpcomponents-fluentHc = { group = "org.apache.httpcomponents", name = "fluent-hc", version = "4.5.5" }
+jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
+dogstatsd-client = { group = "com.datadoghq", name = "java-dogstatsd-client", version = "2.6.1" }
+jakarta-validation-api = { group = "jakarta.validation", name = "jakarta.validation-api", version = "2.0.2" }
+
+junit = { group = "junit", name = "junit", version = "4.12" }
+fest-assert-core = { group = "org.easytesting", name = "fest-assert-core", version = "2.0M10" }
+mockito-all = { group = "org.mockito", name = "mockito-all", version = "1.10.19" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version = "1.7.25" }
+dnsCacheManipulator = { group = "com.alibaba", name = "dns-cache-manipulator", version = "1.8.1" }
