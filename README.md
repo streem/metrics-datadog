@@ -106,7 +106,7 @@ First, add the `dropwizard-metrics-datadog` dependency in your POM:
     <dependency>
         <groupId>pro.streem.metrics-datadog</groupId>
         <artifactId>dropwizard-metrics-datadog</artifactId>
-        <version>1.1.13</version>
+        <version>2.0.1</version>
     </dependency>
 ~~~
 
@@ -288,16 +288,52 @@ Metrics datadog reporter is available as an artifact on
 
 * Group: pro.streem.metrics-datadog
 * Artifact: metrics-datadog
-* Version: 2.1.0
+* Version: 2.0.1
 
 Dropwizard datadog reporter is available as an artifact on
 [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22pro.streem%22%20AND%20a%3A%22dropwizard-metrics-datadog%22)
 
 * Group: pro.streem.metrics-datadog
 * Artifact: dropwizard-metrics-datadog
-* Version: 2.1.0
+* Version: 2.0.1
 
 ## Contributing
 
 We follow Google's [Java Code
 Style](https://google.github.io/styleguide/javaguide.html)
+
+## Releasing
+
+Releases are handled automatically via CI once the git tag is created.
+
+Setup a couple shell variables to simplify the rest of the commands below:
+
+```sh
+export VERSION="0.9.0"
+export NEXT_VERSION="0.9.1"
+```
+
+To create a new release:
+1. Update `CHANGELOG.md`: add a date for the release version, and update the release version's GitHub compare link with a tag instead of `HEAD`.
+    * Note: if you are releasing a pre-release version (alpha, beta, rc) then you don't need to update `CHANGELOG.md`
+1. Update the version number in `buildSrc/src/main/kotlin/pro.streem.metrics-datadog.java-conventions.gradle.kts` to remove the `SNAPSHOT` suffix. For example, if the current version is `0.9.0-SNAPSHOT`, then update it to be `0.9.0`.
+1. Update the version number in `README.md` to the value of `$VERSION`.
+1. Commit the change. E.g.: `git commit -m "Bump to ${VERSION}" -a`.
+1. Tag the new version. E.g.: `git tag -a -m "See https://github.com/streem/metrics-datadog/blob/v${VERSION}/CHANGELOG.md" "v${VERSION}"`.
+
+Then prepare the repository for development of the next version:
+1. Update `CHANGELOG.md`: add a section for `$NEXT_VERSION` that will follow the released version (e.g. if releasing `0.9.0` then add a section for `0.9.1`).
+    * Note: if you are releasing a pre-release version (alpha, beta, rc) then you don't need to update `CHANGELOG.md`
+1. Update the version number in `buildSrc/src/main/kotlin/pro.streem.metrics-datadog.java-conventions.gradle.kts` to `${NEXT_VERSION}-SNAPSHOT`. For example, `0.9.1-SNAPSHOT`.
+1. Commit the change. E.g.: `git commit -m "Bump to ${NEXT_VERSION}-SNAPSHOT" -a`.
+
+GitHub will build and publish the new release once it sees the new tag:
+
+1. Push the changes to GitHub: `git push origin --follow-tags master`.
+1. Wait for CI to notice the new tag, build it, and upload it to Maven Central.
+1. Create a new release on GitHub. Use the contents of the tag description as the release description. E.g.: `gh release create "v${VERSION}" -F <(git tag -l --format='%(contents)' "v${VERSION}")`.
+
+## Credits
+
+This repository was originally forked from https://github.com/coursera/metrics-datadog.
+

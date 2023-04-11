@@ -29,6 +29,7 @@ publishing {
         from(components["java"])
         pom {
             name.set(artifactId)
+            description.set(provider { project.description })
             url.set("https://github.com/streem/metrics-datadog")
 
             licenses {
