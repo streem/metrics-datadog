@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "pro.streem.metrics-datadog"
-version = "2.0.3-SNAPSHOT"
+version = "3.0.0"
 
 repositories {
     mavenCentral()

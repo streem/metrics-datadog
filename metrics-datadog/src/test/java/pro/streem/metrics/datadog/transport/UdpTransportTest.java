@@ -48,7 +48,7 @@ public class UdpTransportTest {
 
     try {
       retryingCallable.call();
-      assertFalse(true);
+        fail();
     } catch (final Exception e) {}
     // ^ This should throw becuase the host is unresolvable.
 
