@@ -12,7 +12,7 @@ dependencies {
     api(libs.dogstatsd.client)
 
     testImplementation(libs.junit)
-    testImplementation(libs.mockito.all)
+    testImplementation(libs.mockito.core)
     testImplementation(libs.slf4j.simple)
     testImplementation(libs.dnsCacheManipulator)
 }

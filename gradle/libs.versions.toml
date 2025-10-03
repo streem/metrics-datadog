@@ -1,17 +1,23 @@
 [versions]
-metrics = "4.0.2"
-jackson = "2.14.1"
-dropwizard = "2.1.7"
+metrics = "4.2.37"
+jackson = "2.18.2"
+dropwizard = "3.0.1"
+httpcomponents = "4.5.14"
+dogstatsd = "4.4.0"
+junit = "4.13.2"
+mockito = "5.14.2"
+slf4j = "2.0.16"
+dnsCacheManipulator = "1.8.3"
 
 [libraries]
 dropwizard-metrics-core = { group = "io.dropwizard.metrics", name = "metrics-core", version.ref = "metrics" }
 dropwizard-metrics-dropwizard = { group = "io.dropwizard", name = "dropwizard-metrics", version.ref = "dropwizard" }
-httpcomponents-fluentHc = { group = "org.apache.httpcomponents", name = "fluent-hc", version = "4.5.5" }
+httpcomponents-fluentHc = { group = "org.apache.httpcomponents", name = "fluent-hc", version.ref = "httpcomponents" }
 jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
-dogstatsd-client = { group = "com.datadoghq", name = "java-dogstatsd-client", version = "2.9.0" }
+dogstatsd-client = { group = "com.datadoghq", name = "java-dogstatsd-client", version.ref = "dogstatsd" }
 
-junit = { group = "junit", name = "junit", version = "4.13.1" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 fest-assert-core = { group = "org.easytesting", name = "fest-assert-core", version = "2.0M10" }
-mockito-all = { group = "org.mockito", name = "mockito-all", version = "1.10.19" }
-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version = "1.7.25" }
-dnsCacheManipulator = { group = "com.alibaba", name = "dns-cache-manipulator", version = "1.8.1" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
+dnsCacheManipulator = { group = "com.alibaba", name = "dns-cache-manipulator", version.ref = "dnsCacheManipulator" }
