@@ -13,17 +13,17 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Cache gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -42,11 +42,18 @@ jobs:
 
       - name: Bundle the build report
         if: failure()
-        run: find . -type d -name 'reports' | zip -@ -r build-reports.zip
+        run: |
+            REPORTS=$(find . -type d -name 'reports')
+            if [ -n "$REPORTS" ]; then
+              echo "$REPORTS" | zip -@ -r build-reports.zip
+            else
+              echo "No reports directory found; skipping zip."
+              touch build-reports.zip
+            fi
 
       - name: Upload the build report
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: error-report
           path: build-reports.zip

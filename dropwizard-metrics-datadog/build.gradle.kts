@@ -10,4 +10,5 @@ dependencies {
     api(libs.dropwizard.metrics.dropwizard)
     testImplementation(libs.junit)
     testImplementation(libs.fest.assert.core)
+    testImplementation(libs.slf4j.simple)
 }

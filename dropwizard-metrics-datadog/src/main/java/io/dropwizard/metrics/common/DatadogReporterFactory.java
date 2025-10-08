@@ -1,9 +1,10 @@
-package io.dropwizard.metrics;
+package io.dropwizard.metrics.common;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import io.dropwizard.metrics.common.BaseReporterFactory;
 import pro.streem.metrics.datadog.DatadogReporter;
 import pro.streem.metrics.datadog.DefaultMetricNameFormatterFactory;
 import pro.streem.metrics.datadog.DynamicTagsCallbackFactory;

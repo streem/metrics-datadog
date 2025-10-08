@@ -1,5 +1,6 @@
 package io.dropwizard.metrics;
 
+import io.dropwizard.metrics.common.DatadogReporterFactory;
 import io.dropwizard.jackson.DiscoverableSubtypeResolver;
 import org.fest.assertions.api.Assertions;
 import org.junit.Test;
