@@ -82,17 +82,17 @@ jobs:
     # TODO: There's gotta be a better way :(
     if: ${{ success() || (needs.create-staging-repository.result == 'skipped' && needs.build.result == 'success') }}
     name: Publish
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Cache gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -120,7 +120,7 @@ jobs:
     needs: [create-staging-repository, publish]
     if: ${{ always() && needs.create-staging-repository.result == 'success' }}
     name: Finalize staging repository
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Discard
